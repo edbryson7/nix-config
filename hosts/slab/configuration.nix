@@ -21,15 +21,11 @@
     "electron-39.8.10"
   ];
 
-  networking.hostName = "slab"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-  # Enable networking
-  networking.networkmanager.enable = true;
 
   # Enable bluetooth
   hardware.bluetooth.enable = true;
@@ -152,19 +148,13 @@
   # Install programs
   programs.firefox.enable = true;
   programs.steam.enable = true;
-  programs.git.enable = true;
 
   # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
   # nixpkgs.config.pulseaudio = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    wget
-    file-roller
-    github-cli
   ];
 
   # fonts
@@ -196,7 +186,6 @@
   };
 
   services.blueman.enable = true;
-  services.tailscale.enable = true;
 
   powerManagement.enable = true;
   services.thermald.enable = true;
@@ -237,10 +226,5 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "25.05"; # Did you read the comment?
-
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
 
 }

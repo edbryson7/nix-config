@@ -19,4 +19,5 @@
     github-cli
   ];
 
+  services.tailscale.enable = true;
 }
