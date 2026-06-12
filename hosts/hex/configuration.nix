@@ -72,6 +72,12 @@
     };
   };
 
+  # jellyfin
+  services.jellyfin = {
+    enable = true;
+    openFirewall = true;
+  };
+
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
@@ -94,11 +100,13 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
+  users.groups.vault = {};
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users."ebryson" = {
     isNormalUser = true;
     description = "ebryson";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "vault" "docker"];
     packages = with pkgs; [
     #  thunderbird
     

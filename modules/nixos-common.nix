@@ -19,5 +19,15 @@
     github-cli
   ];
 
+
+  users.users.ebryson.packages = with pkgs; [
+    tree
+  ];
+
+  virtualisation.docker = {
+    enable = true;
+  };
+
   services.tailscale.enable = true;
+
 }
