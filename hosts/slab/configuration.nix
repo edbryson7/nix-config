@@ -21,7 +21,7 @@
     "electron-39.8.10"
   ];
 
-  networking.hostName = "hex"; # Define your hostname.
+  networking.hostName = "slab"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -212,10 +212,10 @@
       # CPU_ENERGY_PERF_POLICY_ON_AC = "power";
       CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
 
-      CPU_MIN_PERF_ON_AC = 0;
-      CPU_MAX_PERF_ON_AC = 70;
-      CPU_MIN_PERF_ON_BAT = 0;
-      CPU_MAX_PERF_ON_BAT = 40;
+      CPU_MIN_PERF_ON_AC = 16;
+      CPU_MAX_PERF_ON_AC = 50;
+      CPU_MIN_PERF_ON_BAT = 16;
+      CPU_MAX_PERF_ON_BAT = 20;
 
       #Optional helps save long term battery health
       START_CHARGE_THRESH_BAT0 = 40; # 40 and below it starts to charge

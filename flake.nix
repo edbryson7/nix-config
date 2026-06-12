@@ -21,11 +21,11 @@
       formatter = self.lib.mkFlakeOutput (system: nixpkgs.legacyPackages.${system}.nixfmt-tree);
 
       # imageScripts.puter = self.nixosConfigurations.puter.config.system.build.diskoImagesScript;
-      # nixosConfigurations.puter =
+      # nixosConfigurations.hex =
       #   let
       #     username = "ebryson";
-      #     hostname = "puter";
-      #     specialArgs = inputs // {
+      #     hostname = "hex";
+      #     specialargs = inputs // {
       #       inherit username hostname ;
       #     };
       #   in
@@ -36,9 +36,35 @@
       #     ];
       #   };
 
-      nixosConfigurations.hex = nixpkgs.lib.nixosSystem {
-        modules = [
-          (import ./configuration.nix)
+      nixosConfigurations.slab =
+        let
+          username = "ebryson";
+          hostname = "slab";
+          specialArgs = inputs // {
+            inherit username hostname ;
+          };
+        in
+        nixpkgs.lib.nixosSystem {
+          inherit specialArgs;
+          modules = [
+            ./modules/nixos-common.nix
+            (import ./hosts/slab/configuration.nix)
+       ];
+     };
+
+      nixosConfigurations.hex = 
+        let
+          username = "ebryson";
+          hostname = "hex";
+          specialArgs = inputs // {
+            inherit username hostname ;
+          };
+        in
+        nixpkgs.lib.nixosSystem {
+          inherit specialArgs;
+          modules = [
+            ./modules/nixos-common.nix
+            (import ./hosts/hex/configuration.nix)
         ];
       };
     };
