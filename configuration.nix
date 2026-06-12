@@ -21,7 +21,7 @@
     "electron-39.8.10"
   ];
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "hex"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -79,7 +79,7 @@
   hardware.opengl = {
     enable = true;
   };
-  services.xserver.libinput.enable = true;
+  services.libinput.enable = true;
 
   # Enable the XFCE Desktop Environment.
   services.xserver.displayManager.lightdm.enable = true;
@@ -131,11 +131,11 @@
       prismlauncher
       vlc
       jellyfin-media-player
-      protonvpn-gui
-      xfce.xfce4-docklike-plugin
-      xfce.xfce4-whiskermenu-plugin
-      xfce.xfce4-pulseaudio-plugin
-      xorg.xkill
+      proton-vpn
+      xfce4-docklike-plugin
+      xfce4-whiskermenu-plugin
+      xfce4-pulseaudio-plugin
+      xkill
       gruvbox-dark-gtk
       btop
       alacritty
@@ -144,7 +144,8 @@
       pywal
       starship
       calibre
-      zoom-us
+      thunar-volman
+      thunar-archive-plugin
     ];
   };
 
@@ -156,12 +157,6 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
   # nixpkgs.config.pulseaudio = true;
-
-  # Thunar Plugins
-  programs.thunar.plugins = with pkgs.xfce; [
-    thunar-archive-plugin
-    thunar-volman
-  ];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget

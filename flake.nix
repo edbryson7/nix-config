@@ -36,7 +36,7 @@
       #     ];
       #   };
 
-      nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+      nixosConfigurations.hex = nixpkgs.lib.nixosSystem {
         modules = [
           (import ./configuration.nix)
         ];
