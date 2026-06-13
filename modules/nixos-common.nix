@@ -17,6 +17,7 @@
     wget
     git
     github-cli
+    btop
   ];
 
 

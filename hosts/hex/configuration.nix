@@ -5,6 +5,7 @@
 { config, pkgs, ... }:
 
 {
+
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
@@ -17,6 +18,11 @@
   boot.supportedFilesystems = [ "zfs" ];
   boot.zfs.forceImportRoot = false;
   networking.hostId = "42d13837";
+  boot.zfs.extraPools = [ "vault" ];
+
+  nixpkgs.config.permittedInsecurePackages = [
+    "intel-media-sdk-23.2.2"
+  ];
 
   networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -42,23 +48,21 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  environment.systemPackages = [
-    pkgs.zfs
-  ];
-
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
   # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.displayManager.gdm.autoSuspend = false;
-  services.xserver.desktopManager.gnome.enable = true;
+  services.displayManager.gdm.enable = true;
+  services.displayManager.gdm.autoSuspend = false;
+  services.desktopManager.gnome.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
     variant = "";
   };
+
+  # List services that you want to enable:
 
   services.openssh = {
     enable = true;
@@ -72,11 +76,87 @@
     };
   };
 
-  # jellyfin
+
+  hardware.graphics = {
+    enable = true;
+
+    extraPackages = with pkgs; [
+      intel-media-driver
+      intel-media-sdk
+      libva
+      libvdpau-va-gl
+    ];
+  };
+
+  environment.systemPackages = with pkgs; [
+    pkgs.zfs
+    intel-gpu-tools
+    libva-utils
+  ];
+
   services.jellyfin = {
     enable = true;
     openFirewall = true;
+    hardwareAcceleration = {
+      enable = true;
+      type = "qsv";
+      device = "/dev/dri/renderD128";
+    };
+    forceEncodingConfig = true;
+
+    transcoding = {
+      enableHardwareEncoding = true;
+      enableToneMapping = false;
+      hardwareEncodingCodecs ={
+        hevc = true;
+      };
+      hardwareDecodingCodecs ={
+        h264 = true;
+        hevc = true;
+        hevc10bit = false;
+        vp9 = false;
+      };
+    };
   };
+
+  services.samba = {
+    enable = false;
+    securityType = "user";
+    openFirewall = true;
+    settings = {
+      global = {
+        "workgroup" = "WORKGROUP";
+        "server string" = "smbnix";
+        "netbios name" = "smbnix";
+        "security" = "user";
+        #"use sendfile" = "yes";
+        #"max protocol" = "smb2";
+        # note: localhost is the ipv6 localhost ::1
+        "hosts allow" = "192.168.0. 127.0.0.1 localhost";
+        "hosts deny" = "0.0.0.0/0";
+        "guest account" = "nobody";
+        "map to guest" = "bad user";
+      };
+      "private" = {
+        "path" = "/mnt/Shares/Private";
+        "browseable" = "yes";
+        "read only" = "no";
+        "guest ok" = "no";
+        "create mask" = "0644";
+        "directory mask" = "0755";
+        "force user" = "username";
+        "force group" = "groupname";
+      };
+    };
+  };
+
+  services.samba-wsdd = {
+    enable = false;
+    openFirewall = true;
+  };
+  
+  networking.firewall.enable = true;
+  networking.firewall.allowPing = true;
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -113,6 +193,10 @@
     ];
   };
 
+  users.users."jellyfin" = {
+    extraGroups = [ "video" "render" ];
+  };
+
   # Install firefox.
   programs.firefox.enable = true;
 
@@ -126,8 +210,6 @@
   #   enable = true;
   #   enableSSHSupport = true;
   # };
-
-  # List services that you want to enable:
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
