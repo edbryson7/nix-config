@@ -134,38 +134,37 @@
   };
 
   services.samba = {
-    enable = false;
+    enable = true;
     securityType = "user";
     openFirewall = true;
     settings = {
       global = {
         "workgroup" = "WORKGROUP";
-        "server string" = "smbnix";
-        "netbios name" = "smbnix";
+        "server string" = "hex";
         "security" = "user";
         #"use sendfile" = "yes";
         #"max protocol" = "smb2";
         # note: localhost is the ipv6 localhost ::1
-        "hosts allow" = "192.168.0. 127.0.0.1 localhost";
-        "hosts deny" = "0.0.0.0/0";
+        "hosts allow" = "10.168.168.0/24 100.64.0.0/10 127.0.0.1 localhost";
+        "hosts deny" = "ALL";
         "guest account" = "nobody";
         "map to guest" = "bad user";
       };
-      "private" = {
-        "path" = "/mnt/Shares/Private";
+      "files" = {
+        "path" = "/vault/files";
         "browseable" = "yes";
         "read only" = "no";
         "guest ok" = "no";
+        "valid users" = "ebryson";
         "create mask" = "0644";
         "directory mask" = "0755";
-        "force user" = "username";
-        "force group" = "groupname";
       };
     };
   };
+  networking.firewall.extraCommands = ''iptables -t raw -A OUTPUT -p udp -m udp --dport 137 -j CT --helper netbios-ns'';
 
   services.samba-wsdd = {
-    enable = false;
+    enable = true;
     openFirewall = true;
   };
   
