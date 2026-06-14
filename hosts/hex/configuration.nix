@@ -20,6 +20,19 @@
   networking.hostId = "42d13837";
   boot.zfs.extraPools = [ "vault" ];
 
+
+  services.smartd = {
+    enable = true;
+    devices = [
+      {
+        device = "/dev/disk/by-id/ata-ST12000VN0007-2GS116_ZJV0FLCA";
+      }
+      {
+        device = "/dev/disk/by-id/ata-ST12000VN0007-2GS116_ZJV0QN2P"; 
+      }
+    ];
+  };
+
   nixpkgs.config.permittedInsecurePackages = [
     "intel-media-sdk-23.2.2"
   ];
@@ -92,6 +105,7 @@
     pkgs.zfs
     intel-gpu-tools
     libva-utils
+    smartmontools
   ];
 
   services.jellyfin = {
