@@ -1,4 +1,4 @@
-{ hostname, pkgs, ... }:
+{ hostname, pkgs, zen-browser, ... }:
 
 {
   nixpkgs.config.allowUnfree = true;
@@ -18,6 +18,7 @@
     git
     github-cli
     btop
+    zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 
 

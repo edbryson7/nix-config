@@ -5,6 +5,10 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     disko.url = "github:nix-community/disko/latest";
     disko.inputs.nixpkgs.follows = "nixpkgs";
+    zen-browser = {
+      url = "github:youwen5/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -12,6 +16,7 @@
       self,
       nixpkgs,
       disko,
+      zen-browser,
     }:
     {
       lib = {
@@ -19,22 +24,6 @@
       };
 
       formatter = self.lib.mkFlakeOutput (system: nixpkgs.legacyPackages.${system}.nixfmt-tree);
-
-      # imageScripts.puter = self.nixosConfigurations.puter.config.system.build.diskoImagesScript;
-      # nixosConfigurations.hex =
-      #   let
-      #     username = "ebryson";
-      #     hostname = "hex";
-      #     specialargs = inputs // {
-      #       inherit username hostname ;
-      #     };
-      #   in
-      #   nixpkgs.lib.nixosSystem {
-      #     inherit specialArgs;
-      #     modules = [
-      #       # TODO configuration.nix
-      #     ];
-      #   };
 
       nixosConfigurations.slab =
         let
