@@ -56,5 +56,20 @@
             (import ./hosts/hex/configuration.nix)
         ];
       };
+      nixosConfigurations.atium = 
+        let
+          username = "ebryson";
+          hostname = "atium";
+          specialArgs = inputs // {
+            inherit username hostname ;
+          };
+        in
+        nixpkgs.lib.nixosSystem {
+          inherit specialArgs;
+          modules = [
+            ./modules/nixos-common.nix
+            (import ./hosts/atium/configuration.nix)
+        ];
+      };
     };
 }

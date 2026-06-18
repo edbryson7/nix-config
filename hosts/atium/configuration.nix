@@ -5,10 +5,11 @@
 { config, pkgs, ... }:
 
 {
-  imports = [
-    # Include the results of the hardware scan.
-    ./hardware-configuration.nix
-  ];
+  imports =
+    [ # Include the results of the hardware scan.
+      ./hardware-configuration.nix
+      ./hypr.nix
+    ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -26,9 +27,6 @@
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-  # Enable bluetooth
-  hardware.bluetooth.enable = true;
 
   # Set your time zone.
   time.timeZone = "America/New_York";
@@ -49,37 +47,12 @@
   };
 
   # Enable the X11 windowing system.
+  # You can disable this if you're only using the Wayland session.
   services.xserver.enable = true;
 
-  # NVIDIA
-  hardware.graphics.enable = true;
-  services.xserver.videoDrivers = [
-    "nvidia"
-    "modesetting"
-  ];
-  hardware.nvidia = {
-    modesetting.enable = true;
-    open = false;
-    powerManagement.enable = false;
-    powerManagement.finegrained = false;
-    nvidiaSettings = true;
-    prime = {
-      offload.enable = true;
-      offload.enableOffloadCmd = true;
-
-      intelBusId = "PCI:0:2:0";
-      nvidiaBusId = "PCI:1:0:0";
-    };
-  };
-
-  hardware.opengl = {
-    enable = true;
-  };
-  services.libinput.enable = true;
-
-  # Enable the XFCE Desktop Environment.
-  services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.desktopManager.xfce.enable = true;
+  # Enable the KDE Plasma Desktop Environment.
+  services.displayManager.sddm.enable = true;
+  services.desktopManager.plasma6.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -106,20 +79,30 @@
     #media-session.enable = true;
   };
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = false;
+  };
+
+  services.openssh = {
+    enable = true;
+    openFirewall = true;
+    settings = {
+      PasswordAuthentication = true;
+      KbdInteractiveAuthentication = false;
+      PermitRootLogin = "no";
+      MaxAuthTries = 3;
+      PerSourcePenalties = "crash:3600s authfail:3600s max:86400s";
+    };
+  };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.ebryson = {
+  users.users."ebryson" = {
     isNormalUser = true;
     description = "ebryson";
-    extraGroups = [
-      "audio"
-      "networkmanager"
-      "wheel"
-    ];
+    extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
-      #  thunderbird
+      kdePackages.kate
       discord
       spotify
       bitwarden-desktop
@@ -128,11 +111,6 @@
       vlc
       jellyfin-media-player
       proton-vpn
-      xfce4-docklike-plugin
-      xfce4-whiskermenu-plugin
-      xfce4-pulseaudio-plugin
-      xkill
-      gruvbox-dark-gtk
       btop
       alacritty
       nemo
@@ -140,33 +118,21 @@
       pywal
       starship
       calibre
-      thunar-volman
-      thunar-archive-plugin
+    #  thunderbird
     ];
   };
 
-  # Install programs
+  # Install firefox.
   programs.firefox.enable = true;
   programs.steam.enable = true;
 
   # Allow unfree packages
-  # nixpkgs.config.pulseaudio = true;
+  nixpkgs.config.allowUnfree = true;
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
   environment.systemPackages = with pkgs; [
   ];
 
-  # fonts
-  fonts.packages = with pkgs; [
-    nerd-fonts.fira-code
-    noto-fonts
-    noto-fonts-cjk-sans
-    noto-fonts-color-emoji
-    liberation_ttf
-    fira-code
-    fira-code-symbols
-  ];
+  fonts.packages = with pkgs; [];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -181,34 +147,6 @@
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
 
-  services.blueman.enable = true;
-
-  powerManagement.enable = true;
-  services.thermald.enable = true;
-
-  services.tlp = {
-    enable = true;
-    settings = {
-      CPU_SCALING_GOVERNOR_ON_AC = "performance";
-      # CPU_SCALING_GOVERNOR_ON_AC = "powersave";
-      CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
-
-      CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
-      # CPU_ENERGY_PERF_POLICY_ON_AC = "power";
-      CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
-
-      CPU_MIN_PERF_ON_AC = 16;
-      CPU_MAX_PERF_ON_AC = 50;
-      CPU_MIN_PERF_ON_BAT = 16;
-      CPU_MAX_PERF_ON_BAT = 20;
-
-      #Optional helps save long term battery health
-      START_CHARGE_THRESH_BAT0 = 40; # 40 and below it starts to charge
-      STOP_CHARGE_THRESH_BAT0 = 80; # 80 and above it stops charging
-
-    };
-  };
-
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
@@ -221,6 +159,8 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "25.05"; # Did you read the comment?
+
+  system.stateVersion = "26.05"; # Did you read the comment?
 
 }
+
