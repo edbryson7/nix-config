@@ -13,5 +13,6 @@
     hyprpolkitagent
     waybar
     font-awesome
+    pavucontrol
   ];
 }

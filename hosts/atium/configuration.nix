@@ -130,6 +130,8 @@
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
+    google-chrome
+    rocmPackages.rocm-smi
   ];
 
   fonts.packages = with pkgs; [];
