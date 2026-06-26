@@ -73,7 +73,6 @@
             ./modules/game.nix
             ./modules/user.nix
             ./modules/hypr.nix
-            ./modules/AMD.nix
             (import ./hosts/atium/configuration.nix)
         ];
       };

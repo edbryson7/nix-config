@@ -74,6 +74,12 @@
     #media-session.enable = true;
   };
 
+  # Graphics
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
+
 
   # Enable bluetooth
   hardware.bluetooth.enable = true;
