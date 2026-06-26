@@ -8,7 +8,6 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ./hypr.nix
     ];
 
   # Bootloader.
@@ -79,10 +78,9 @@
     #media-session.enable = true;
   };
 
-  hardware.bluetooth = {
-    enable = true;
-    powerOnBoot = false;
-  };
+
+  # Enable bluetooth
+  hardware.bluetooth.enable = true;
 
   services.openssh = {
     enable = true;
@@ -103,34 +101,11 @@
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
       kdePackages.kate
-      discord
-      spotify
-      bitwarden-desktop
-      obsidian
-      prismlauncher
-      vlc
-      jellyfin-media-player
-      proton-vpn
-      btop
-      alacritty
-      nemo
-      fastfetch
-      pywal
-      starship
-      calibre
-    #  thunderbird
     ];
   };
 
-  # Install firefox.
-  programs.firefox.enable = true;
-  programs.steam.enable = true;
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
-    google-chrome
     rocmPackages.rocm-smi
   ];
 

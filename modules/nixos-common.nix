@@ -1,7 +1,9 @@
 { hostname, pkgs, zen-browser, ... }:
 
 {
+  # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+
   nix.settings.experimental-features = [
     "nix-command"
     "flakes"
@@ -11,6 +13,7 @@
   networking.networkmanager.enable = true;
 
   programs.fish.enable = true;
+  programs.firefox.enable = true;
 
   environment.systemPackages = with pkgs; [
     vim 
@@ -22,9 +25,22 @@
     ranger
   ];
 
-
   users.users.ebryson.packages = with pkgs; [
     tree
+    discord
+    spotify
+    bitwarden-desktop
+    obsidian
+    vlc
+    jellyfin-media-player
+    proton-vpn
+    btop
+    alacritty
+    nemo
+    fastfetch
+    pywal
+    starship
+    calibre
   ];
 
   virtualisation.docker = {

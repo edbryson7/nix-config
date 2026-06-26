@@ -36,6 +36,8 @@
         nixpkgs.lib.nixosSystem {
           inherit specialArgs;
           modules = [
+            ./modules/xfce.nix
+            ./modules/game.nix
             ./modules/nixos-common.nix
             (import ./hosts/slab/configuration.nix)
        ];
@@ -68,6 +70,9 @@
           inherit specialArgs;
           modules = [
             ./modules/nixos-common.nix
+            ./modules/game.nix
+            ./modules/hypr.nix
+            ./modules/AMD.nix
             (import ./hosts/atium/configuration.nix)
         ];
       };

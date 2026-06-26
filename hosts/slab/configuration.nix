@@ -57,6 +57,7 @@
     "nvidia"
     "modesetting"
   ];
+
   hardware.nvidia = {
     modesetting.enable = true;
     open = false;
@@ -76,10 +77,6 @@
     enable = true;
   };
   services.libinput.enable = true;
-
-  # Enable the XFCE Desktop Environment.
-  services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.desktopManager.xfce.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -119,35 +116,9 @@
       "wheel"
     ];
     packages = with pkgs; [
-      #  thunderbird
-      discord
-      spotify
-      bitwarden-desktop
-      obsidian
-      prismlauncher
-      vlc
-      jellyfin-media-player
-      proton-vpn
-      xfce4-docklike-plugin
-      xfce4-whiskermenu-plugin
-      xfce4-pulseaudio-plugin
-      xkill
       gruvbox-dark-gtk
-      btop
-      alacritty
-      nemo
-      fastfetch
-      pywal
-      starship
-      calibre
-      thunar-volman
-      thunar-archive-plugin
     ];
   };
-
-  # Install programs
-  programs.firefox.enable = true;
-  programs.steam.enable = true;
 
   # Allow unfree packages
   # nixpkgs.config.pulseaudio = true;

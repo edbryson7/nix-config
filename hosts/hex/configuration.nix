@@ -201,17 +201,12 @@
     description = "ebryson";
     extraGroups = [ "networkmanager" "wheel" "vault" "docker"];
     packages = with pkgs; [
-    #  thunderbird
-    
     ];
   };
 
   users.users."jellyfin" = {
     extraGroups = [ "video" "render" ];
   };
-
-  # Install firefox.
-  programs.firefox.enable = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
