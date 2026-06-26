@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, zen-browser, ... }:
 {
   users.users.ebryson.packages = with pkgs; [
     discord
@@ -10,5 +10,23 @@
     proton-vpn
     pywal
     calibre
+    zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
+    chromium
   ];
+
+  programs.firefox.enable = true;
+  programs.chromium = { 
+    enable = true;
+    extraOpts = {
+      "BrowserSignin" = 0;
+      "SyncDisabled" = true;
+      "PasswordManagerEnabled" = false;
+      "SpellcheckEnabled" = true;
+      "SpellcheckLanguage" = [ "en-US" ];
+    };
+    extensions = [
+      "ddkjiahejlhfcafbddmgiahcphecmpfh" #uBlock Origin Lite
+      "nngceckbapebfimnlniiiahkandclblb" #Bitwarden Password Manager
+    ]; 
+  };
 }

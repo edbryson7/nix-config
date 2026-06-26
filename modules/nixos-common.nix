@@ -1,4 +1,4 @@
-{ hostname, pkgs, zen-browser, ... }:
+{ hostname, pkgs, ... }:
 
 {
   # Allow unfree packages
@@ -13,7 +13,6 @@
   networking.networkmanager.enable = true;
 
   programs.fish.enable = true;
-  programs.firefox.enable = true;
 
   environment.systemPackages = with pkgs; [
     vim 
@@ -21,7 +20,6 @@
     git
     github-cli
     btop
-    zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
     ranger
   ];
 
