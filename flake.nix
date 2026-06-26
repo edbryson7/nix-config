@@ -8,8 +8,7 @@
     zen-browser = {
       url = "github:youwen5/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-  };
+    }; };
 
   outputs =
     inputs@{
@@ -37,6 +36,7 @@
           inherit specialArgs;
           modules = [
             ./modules/xfce.nix
+            ./modules/user.nix
             ./modules/game.nix
             ./modules/nixos-common.nix
             (import ./hosts/slab/configuration.nix)
@@ -71,6 +71,7 @@
           modules = [
             ./modules/nixos-common.nix
             ./modules/game.nix
+            ./modules/user.nix
             ./modules/hypr.nix
             ./modules/AMD.nix
             (import ./hosts/atium/configuration.nix)

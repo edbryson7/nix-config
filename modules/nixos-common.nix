@@ -25,22 +25,18 @@
     ranger
   ];
 
+  nixpkgs.config.permittedInsecurePackages = [
+    "electron-39.8.10"
+    "intel-media-sdk-23.2.2"
+  ];
+
+
   users.users.ebryson.packages = with pkgs; [
     tree
-    discord
-    spotify
-    bitwarden-desktop
-    obsidian
-    vlc
-    jellyfin-media-player
-    proton-vpn
     btop
     alacritty
-    nemo
     fastfetch
-    pywal
     starship
-    calibre
   ];
 
   virtualisation.docker = {
