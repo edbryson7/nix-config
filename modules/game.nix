@@ -15,6 +15,7 @@
     heroic
     lutris
     prismlauncher
+    eden
   ];
 
   programs.gamemode.enable = true;
