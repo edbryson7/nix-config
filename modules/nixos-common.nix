@@ -19,7 +19,8 @@
     wget
     git
     github-cli
-    btop
+    btop-rocm
+    rocmPackages.rocm-smi
     ranger
   ];
 

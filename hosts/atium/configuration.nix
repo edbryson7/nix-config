@@ -108,7 +108,6 @@
 
 
   environment.systemPackages = with pkgs; [
-    rocmPackages.rocm-smi
   ];
 
   fonts.packages = with pkgs; [];
