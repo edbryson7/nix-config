@@ -12,6 +12,7 @@
     calibre
     zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
     chromium
+    qbittorrent
   ];
 
   programs.firefox.enable = true;
