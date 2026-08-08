@@ -8,7 +8,6 @@
     dunst
     wofi
     networkmanagerapplet
-    blueman 
     hyprpaper
     hyprpolkitagent
     waybar
