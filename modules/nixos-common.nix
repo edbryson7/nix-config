@@ -36,6 +36,8 @@
     alacritty
     fastfetch
     starship
+    unzip
+    zip
   ];
 
   virtualisation.docker = {
