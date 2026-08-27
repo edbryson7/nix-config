@@ -6,10 +6,13 @@
     jdk25
   ];
 
+  users.groups.craft = {};
+
   # Minecraft service user
   users.users."craft" = {
     isNormalUser = true;
     description = "minecraft service account";
+    extraGroups = [ "craft" ];
     packages = with pkgs; [
     ];
   };
@@ -27,7 +30,7 @@
 
     serviceConfig = {
     User = "craft";
-    Group = "users";
+    Group = "craft";
 
       WorkingDirectory = ''/home/craft/minecraft'';
       ExecStart = "${pkgs.jdk25}/bin/java -Xms4096M -Xmx4096M -jar /home/craft/minecraft/paper.jar --nogui";
