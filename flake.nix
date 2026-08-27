@@ -55,6 +55,7 @@
           inherit specialArgs;
           modules = [
             ./modules/nixos-common.nix
+            ./modules/minecraft.nix
             (import ./hosts/hex/configuration.nix)
         ];
       };
