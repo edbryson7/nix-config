@@ -9,6 +9,8 @@
     "flakes"
   ];
 
+  nix.optimise.automatic = true;
+
   networking.hostName = hostname;
   networking.networkmanager.enable = true;
 
