@@ -8,7 +8,6 @@
     vlc
     jellyfin-media-player
     proton-vpn
-    pywal
     calibre
     zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
     chromium

@@ -16,6 +16,7 @@
     lutris
     prismlauncher
     eden
+    jdk25
   ];
 
   programs.gamemode.enable = true;
